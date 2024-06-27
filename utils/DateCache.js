@@ -10,7 +10,7 @@ const set = async(key,obj,ttl=600)=>{
 
 // get cache;Return obj
 const get = async(key)=>{
-   return (key);
+   return cache.get(key);
 }
 
 // del cache

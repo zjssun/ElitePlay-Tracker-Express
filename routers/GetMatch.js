@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const Connect = require('../mysql/Connect');
 
-router.get('/',(req,res)=>{
-   res.send('This is the GetMatch page');
+router.get('/',async (req,res)=>{
+   const connect = await Connect();
+   res.send({
+      Connect:connect
+   });
 });
 
 module.exports = router;
