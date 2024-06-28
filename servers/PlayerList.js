@@ -9,7 +9,8 @@ const PlayerList = [
    "jL 23b6ffbb-86ec-47ab-acaa-9c76bed0af66",
    "w0nderful 591e26a3-eb86-4d4c-afa8-b5754455dc03",
    "niko 19606e0c-137b-4885-a904-744fa12d25f6",
-   "Jame f4c95e23-8930-49a5-b49d-94eff8b412f4"
+   "Jame f4c95e23-8930-49a5-b49d-94eff8b412f4",
+   "jks 9a8ea9d5-61c7-4b38-b64f-35f4945048fa"
 ]
 
 module.exports = PlayerList;
