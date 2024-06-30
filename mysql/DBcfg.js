@@ -1,11 +1,14 @@
+const mysql = require('mysql2');
 
-function DBcfg() {
-   return{
-       host: "127.0.0.1",
-       user: "root",
-       database: "eptracker",
-       connectionLimit: 10,
-   }
-}
+const pool = mysql.createPool({
+    host: "127.0.0.1",
+    user: "root",
+    password: '',
+    database: "eptracker",
+    waitForConnections: true,
+    connectionLimit: 10,
+})
 
-module.exports = DBcfg;
+const promisePool = pool.promise();
+
+module.exports = promisePool;

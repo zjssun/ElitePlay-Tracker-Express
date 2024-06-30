@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Connect = require('../mysql/Connect');
+const Connect = require('../mysql/writeInDB');
 
 router.get('/',async (req,res)=>{
    const connect = await Connect();

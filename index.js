@@ -8,6 +8,8 @@ const Enter = require('./routers/Enter');
 const PlayerData = require('./servers/PlayerData');
 //Corn
 const cron = require('node-cron');
+//mysql
+const writeInDB = require('./mysql/writeInDB');
 
 //Middlewares
 app.use(cors());
@@ -43,6 +45,7 @@ cron.schedule('* * * * *',()=>{
 async function updatePlayerData(){
    try{
       const playerData = await PlayerData();
+      await writeInDB(playerData);
       console.log(playerData);
    }catch (e) {
       console.error('Error:', e);
