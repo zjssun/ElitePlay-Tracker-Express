@@ -37,14 +37,14 @@ app.listen(port,()=>{
 });
 
 //Cron Job to update player data every 10 minutes
-// cron.schedule('* * * * *',()=>{
-//    console.log('Running updatePlayerData()...');
-//    updatePlayerData().then(() => {
-//       console.log('updatePlayerData() completed');
-//     }).catch(err => {
-//       console.error('Error in updatePlayerData():', err);
-//     });
-// })
+cron.schedule('* * * * *',()=>{
+   console.log('Running updatePlayerData()...');
+   updatePlayerData().then(() => {
+      console.log('updatePlayerData() completed');
+    }).catch(err => {
+      console.error('Error in updatePlayerData():', err);
+    });
+})
 
 //Function to update player data
 async function updatePlayerData(){
