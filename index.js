@@ -10,6 +10,9 @@ const PlayerData = require('./servers/PlayerData');
 const cron = require('node-cron');
 //mysql
 const writeInDB = require('./mysql/writeInDB');
+//Favicon
+const favicon = require('serve-favicon');
+const path = require('path');
 
 //Middlewares
 app.use(cors());
@@ -17,36 +20,37 @@ app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 //process.env.PORT
 const port = 3000;
+//static files
+app.use(favicon(path.join(__dirname, 'public', 'sr.ico')));
 app.use(express.static('public'));
 
 //Load Routers
 Enter(app);
 
-///Start Server
-app.listen(port,()=>{
-   console.log(`Server is running on port ${port}`);
-})
-
 app.get('/',(req,res)=>{
    res.render("index.html");
 })
 
+///Start Server
+app.listen(port,()=>{
+   console.log(`Server is running on port ${port}`);
+});
+
 //Cron Job to update player data every 10 minutes
-cron.schedule('* * * * *',()=>{
-   console.log('Running updatePlayerData()...');
-   updatePlayerData().then(() => {
-      console.log('updatePlayerData() completed');
-    }).catch(err => {
-      console.error('Error in updatePlayerData():', err);
-    });
-})
+// cron.schedule('* * * * *',()=>{
+//    console.log('Running updatePlayerData()...');
+//    updatePlayerData().then(() => {
+//       console.log('updatePlayerData() completed');
+//     }).catch(err => {
+//       console.error('Error in updatePlayerData():', err);
+//     });
+// })
 
 //Function to update player data
 async function updatePlayerData(){
    try{
       const playerData = await PlayerData();
       await writeInDB(playerData);
-      console.log(playerData);
    }catch (e) {
       console.error('Error:', e);
    }

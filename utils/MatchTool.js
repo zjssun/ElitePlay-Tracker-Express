@@ -64,6 +64,7 @@ function MapImageUrl(mapName){
    }
 }
 
+//Get Table Name
 function GetTable(id){
    switch(id){
       case "93306681-bce6-4369-8c41-e0bdba2597ed":
