@@ -13,8 +13,8 @@ async function writeInDB(playerData) {
    const promises = playerData.map(async (v)=>{
       if(await checkTime(v.time, v.playerId)){
          // Database commands
-         const query = `INSERT INTO ${GetTable(v.playerId)} (time,nickName,team,matchMap,matchScore,matchResult,matchId,roomUrl,bestOf,effectiveRanking,mapimage,totalKills,totalDeaths,totalAssistsL,rating,tripleKill,quadroKill,pentaKill) VALUES 
-                     (\"${v.time}\",\"${v.nickname}\",\"${v.team}\",\"${v.matchMap}\",\"${v.matchScore}\",\"${v.matchResult}\",\"${v.matchId}\",\"${v.roomUrl}\",\"${v.bestOf}\",\"${v.effectiveRanking}\",\"${v.mapimage}\",\"${v.totalKills}\",\"${v.totalDeaths}\",\"${v.totalAssistsL}\",\"${v.rating}\",\"${v.tripleKill}\",\"${v.quadroKill}\",\"${v.quadroKill}\")`;
+         const query = `INSERT INTO ${GetTable(v.playerId)} (time,nickName,team,matchMap,matchScore,matchResult,matchId,roomUrl,bestOf,effectiveRanking,mapimage,totalKills,totalDeaths,totalAssistsL,rating,tripleKill,quadroKill,pentaKill,timestamp) VALUES 
+                     (\"${v.time}\",\"${v.nickname}\",\"${v.team}\",\"${v.matchMap}\",\"${v.matchScore}\",\"${v.matchResult}\",\"${v.matchId}\",\"${v.roomUrl}\",\"${v.bestOf}\",\"${v.effectiveRanking}\",\"${v.mapimage}\",\"${v.totalKills}\",\"${v.totalDeaths}\",\"${v.totalAssistsL}\",\"${v.rating}\",\"${v.tripleKill}\",\"${v.quadroKill}\",\"${v.quadroKill}\",\"${v.timestamp}\")`;
          try{
             await Connect.query(query);
             console.log(`Player ${v.playerId} added to DB`);

@@ -73,6 +73,10 @@ router.get('/:playerName',async (req,res)=>{
       });
    }catch(err){
       console.error("Get PlayerData Error:",err);
+      res.send({
+         message: "error",
+         error: err
+      });
    }
 })
 
