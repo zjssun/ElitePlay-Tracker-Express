@@ -35,7 +35,7 @@ router.get('/all',async (req,res)=>{
       }
       res.send({
          message: "success",
-         data: alldata[0]
+         playerMatch: alldata[0]
       });
    }catch(err){
       console.error(err);
@@ -62,7 +62,7 @@ router.get('/:playerName',async (req,res)=>{
       }
       res.send({
          message: "success",
-         playerName: playerData[0]
+         playerMatch: playerData[0]
       });
    }catch(err){
       console.error("Get PlayerData Error:",err);
@@ -103,7 +103,7 @@ router.post('/matchTime',async (req,res)=>{
       }
       res.send({
          message: "success",
-         data: playerData[0]
+         playerMatch: playerData[0]
       });
    }catch(err){
       console.error("Get MatchTime Error:",err);

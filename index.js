@@ -9,7 +9,7 @@ const PlayerData = require('./servers/PlayerData');
 //Corn
 const cron = require('node-cron');
 //mysql
-const writeInDB = require('./mysql/writeInDB');
+const {writeInDB,deleteExpiredData} = require('./mysql/dbOperations');
 //Favicon
 const favicon = require('serve-favicon');
 const path = require('path');
@@ -51,6 +51,7 @@ async function updatePlayerData(){
    try{
       const playerData = await PlayerData();
       await writeInDB(playerData);
+      await deleteExpiredData();
    }catch (e) {
       console.error('Error:', e);
    }

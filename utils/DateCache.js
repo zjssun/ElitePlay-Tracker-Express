@@ -1,6 +1,6 @@
 const NodeCache = require('node-cache');
 
-// del cache every 600 seconds; check every 60 seconds
+// del cache every 180 seconds; check every 60 seconds
 const cache = new NodeCache({stdTTL: 180, checkperiod: 190});
 
 // set cache;Return true or false

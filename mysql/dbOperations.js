@@ -1,5 +1,8 @@
 const Connect = require('./Connect');
+const PlayerList = require('../servers/PlayerList');
 const { GetTable } = require('../utils/MatchTool');
+const { ComparisonTime } = require('../utils/GetTime');
+
 
 // Check if the time already exists in the table
 async function checkTime(time, playerId){
@@ -17,16 +20,43 @@ async function writeInDB(playerData) {
                      (\"${v.time}\",\"${v.nickname}\",\"${v.team}\",\"${v.matchMap}\",\"${v.matchScore}\",\"${v.matchResult}\",\"${v.matchId}\",\"${v.roomUrl}\",\"${v.bestOf}\",\"${v.effectiveRanking}\",\"${v.mapimage}\",\"${v.totalKills}\",\"${v.totalDeaths}\",\"${v.totalAssistsL}\",\"${v.rating}\",\"${v.tripleKill}\",\"${v.quadroKill}\",\"${v.quadroKill}\",\"${v.timestamp}\")`;
          try{
             await Connect.query(query);
-            console.log(`Player ${v.playerId} added to DB`);
+            console.log(`Player ${GetTable(v.playerId)} Match added to DB`);
          }catch(err){
             console.error('Error Write to DB:', err);
             throw err;
          }
       }else{
-         console.log(`Player ${v.playerId} already exists in ${GetTable(v.playerId)} at ${v.time}`);
+         console.log(`Player already exists in ${GetTable(v.playerId)} at ${v.time}`);
       }
    });
    await Promise.all(promises);
 }
 
-module.exports = writeInDB;
+//Delete expired match data
+async function deleteExpiredData(){
+   try{
+      const promises = PlayerList.map(async (player)=>{
+         const query = `SELECT * FROM ${player.split(' ')[0]}`;
+         const [rows] = await Connect.query(query);
+         let timeList = [];
+         //Push Expired time to timeList
+         rows.forEach(row => {
+            timeList.push(row.timestamp);
+         });
+         //Check whether the match is expired and delete the corresponding match
+         timeList.forEach(async time =>{
+            if(ComparisonTime(time)){
+               const query = `DELETE FROM ${player.split(' ')[0]} WHERE timestamp = "${time}"`;
+               await Connect.query(query);
+               console.log(`Player ${player.split(' ')[0]} Match deleted from DB at ${time}`);
+            }
+         })
+      })
+      await Promise.all(promises);
+   }catch(err){
+      console.error('Error Delete Expired Data:', err);
+   }
+   
+}
+
+module.exports = { writeInDB, deleteExpiredData };

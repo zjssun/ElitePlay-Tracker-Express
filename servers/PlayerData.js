@@ -1,6 +1,6 @@
 const axios = require('axios');
 const {get,set,del} = require('../utils/DateCache');
-const GetTime = require('../utils/GetTime');
+const {GetTime} = require('../utils/GetTime');
 const {figureResult,FindTeam,MapImageUrl} = require('../utils/MatchTool');
 
 const PlayerList = require('./PlayerList');
@@ -54,6 +54,7 @@ const getData = async (data)=>{
                matchId:v.matchId,
                roomUrl:`https://www.faceit.com/en/cs2/room/${v.matchId}/scoreboard`,
                bestOf:v.bestOf,
+               timestamp:v.created_at,
             };
          }
       });
@@ -67,11 +68,11 @@ const getPlayerDate = async () => {
    let FinalData = [];
    try {
       const promises = PlayerList.map(async (v) => {
-      const playerId = v.split(' ')[1];
-      const response = await axios.get(`https://www.faceit.com/api/stats/v1/stats/time/users/${playerId}/games/cs2?page=0&size=10&game_mode=5v5`);
-      const matchHistory = response.data;
-      let playerData = await getData(matchHistory);
-      FinalData = [...FinalData, ...playerData.filter(v => v !== null)];
+         const playerId = v.split(' ')[1];
+         const response = await axios.get(`https://www.faceit.com/api/stats/v1/stats/time/users/${playerId}/games/cs2?page=0&size=10&game_mode=5v5`);
+         const matchHistory = response.data;
+         let playerData = await getData(matchHistory);
+         FinalData = [...FinalData, ...playerData.filter(v => v !== null)];
      });
      await Promise.all(promises);
      return FinalData;
