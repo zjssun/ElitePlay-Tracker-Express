@@ -33,7 +33,7 @@ app.get('/',(req,res)=>{
 
 ///Start Server
 app.listen(port,()=>{
-   console.log(`Server is running on port ${port}`);
+   console.log(`Server is running http://localhost:${port}`);
 });
 
 //Cron Job to update player data every 10 minutes
