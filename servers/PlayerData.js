@@ -1,6 +1,6 @@
 const axios = require('axios');
 const {get,set,del} = require('../utils/DateCache');
-const {GetTime} = require('../utils/GetTime');
+const {GetTime} = require('../utils/TimeTool');
 const {figureResult,FindTeam,MapImageUrl} = require('../utils/MatchTool');
 
 const PlayerList = require('./PlayerList');
@@ -27,7 +27,7 @@ const getData = async (data)=>{
             const teamContent = JSON.parse(`{${Details.slice(teamKeyIndex,-1)}`);
             let PlayerDetail= FindTeam(teamContent.teams,v.i5,v.nickname);
             return{
-               time:GetTime(v.created_at),
+               time:GetTime(v.created_at,'YYYY/MM/DD,h:mm:ss'),
                nickname:v.nickname,
                playerId:v._id.playerId,
                team:v.i5,
@@ -43,7 +43,7 @@ const getData = async (data)=>{
             }
          }else{
             return {
-               time:GetTime(v.created_at),
+               time:GetTime(v.created_at,'YYYY/MM/DD,h:mm:ss'),
                nickname:v.nickname,
                playerId:v._id.playerId,
                team:v.i5,

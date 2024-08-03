@@ -1,7 +1,7 @@
 const moment = require('moment');
 
-function GetTime(date) {
-   return moment(date).format('YYYY/MM/DD,h:mm:ss');
+function GetTime(date,format) {
+   return moment(date).format(format);
 }
 
 function ComparisonTime(time){

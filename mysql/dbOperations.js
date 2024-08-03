@@ -1,7 +1,7 @@
 const Connect = require('./Connect');
 const PlayerList = require('../servers/PlayerList');
 const { GetTable } = require('../utils/MatchTool');
-const { ComparisonTime } = require('../utils/GetTime');
+const { ComparisonTime } = require('../utils/TimeTool');
 
 
 // Check if the time already exists in the table

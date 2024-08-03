@@ -31,7 +31,7 @@ function FindTeam(Data,selfteam,nickname){
             totalAssistsL:players.i7,
             rating:players.c2,
             tripleKill:players.i14 || "0",
-            quadroKill:players.i39 || "0",
+            quadroKill:players.i15 || "0",
             pentaKill:players.i16 || "0",
          }
       }else{
