@@ -40,8 +40,23 @@ cd ElitePlay-Tracker-Express/
 ```js
 npm install
 ```
+**5.编辑数据库配置文件 Edit the database configuration file:**
 
-**5.启动服务 Start the service:**
+打开根目录的[Connect.js](https://github.com/zjssun/ElitePlay-Tracker-Express/blob/master/mysql/Connect.js)文件，编辑数据库配置。
+
+```js
+const pool = mysql.createPool({
+    host: "127.0.0.1",//数据库地址
+    user: "root",//用户名
+    password: '',//密码
+    database: "eptracker",//数据库名
+    //port: 3306,默认端口号
+    waitForConnections: true,
+    connectionLimit: 10,
+})
+```
+
+**6.启动服务 Start the service:**
 
 ```js
 npm start
