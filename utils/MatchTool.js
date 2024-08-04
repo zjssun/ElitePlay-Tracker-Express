@@ -22,6 +22,7 @@ function figureResult(matchScore,selfScore){
 //Find out which team the player is on
 function FindTeam(Data,selfteam,nickname){
    const team = Data.find(team=>team.i5===selfteam);
+   
    if(team){
       const players = team.players.find(players=>players.nickname===nickname);
       if(players){
@@ -29,7 +30,7 @@ function FindTeam(Data,selfteam,nickname){
             totalKills:players.i6,
             totalDeaths:players.i8,
             totalAssistsL:players.i7,
-            rating:players.c2,
+            rating:formatRating(players.c2),
             tripleKill:players.i14 || "0",
             quadroKill:players.i15 || "0",
             pentaKill:players.i16 || "0",
@@ -95,9 +96,24 @@ function GetTable(id){
          return "unknown";
    }
 }
+
+//Format Rating
+function formatRating(str) {
+   const parts = str.split('.');
+   if (parts.length === 1) {
+     return str + '.0';
+   } else if (parts.length === 2 && parts[1].length <= 2) {
+     return str;
+   } else {
+     return str;
+   }
+ }
+
+
 module.exports = {
    figureResult,
    FindTeam,
    MapImageUrl,
-   GetTable
+   GetTable,
+   formatRating
 }

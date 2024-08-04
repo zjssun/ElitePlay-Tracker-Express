@@ -36,8 +36,8 @@ app.listen(port,()=>{
    console.log(`Server is running http://localhost:${port}`);
 });
 
-//Cron Job to update player data every 10 minutes
-cron.schedule('*/10 * * * *',()=>{
+//Cron Job to update player data
+cron.schedule('*/2 * * * *',()=>{
    console.log('Running updatePlayerData()...');
    updatePlayerData().then(() => {
       console.log('updatePlayerData() completed');
@@ -45,13 +45,13 @@ cron.schedule('*/10 * * * *',()=>{
       console.error('Error in updatePlayerData():', err);
     });
 })
-
 //Function to update player data
 async function updatePlayerData(){
    try{
       const playerData = await PlayerData();
       await writeInDB(playerData);
       await deleteExpiredData();
+      console.log(playerData);
    }catch (e) {
       console.error('Error:', e);
    }
