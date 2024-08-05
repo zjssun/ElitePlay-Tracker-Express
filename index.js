@@ -37,21 +37,20 @@ app.listen(port,()=>{
 });
 
 //Cron Job to update player data
-cron.schedule('*/2 * * * *',()=>{
-   console.log('Running updatePlayerData()...');
-   updatePlayerData().then(() => {
-      console.log('updatePlayerData() completed');
-    }).catch(err => {
-      console.error('Error in updatePlayerData():', err);
-    });
-})
+// cron.schedule('* * * * *',()=>{
+//    console.log('Running updatePlayerData()...');
+//    updatePlayerData().then(() => {
+//       console.log('updatePlayerData() completed');
+//     }).catch(err => {
+//       console.error('Error in updatePlayerData():', err);
+//     });
+// })
 //Function to update player data
 async function updatePlayerData(){
    try{
       const playerData = await PlayerData();
       await writeInDB(playerData);
       await deleteExpiredData();
-      console.log(playerData);
    }catch (e) {
       console.error('Error:', e);
    }

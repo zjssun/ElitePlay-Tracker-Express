@@ -31,6 +31,7 @@ function FindTeam(Data,selfteam,nickname){
             totalDeaths:players.i8,
             totalAssistsL:players.i7,
             rating:formatRating(players.c2),
+            adr:players.c10 || "unstats",
             tripleKill:players.i14 || "0",
             quadroKill:players.i15 || "0",
             pentaKill:players.i16 || "0",
