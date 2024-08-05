@@ -19,31 +19,6 @@ function figureResult(matchScore,selfScore){
   return matchResult;
 }
 
-//Find out which team the player is on
-function FindTeam(Data,selfteam,nickname){
-   const team = Data.find(team=>team.i5===selfteam);
-   
-   if(team){
-      const players = team.players.find(players=>players.nickname===nickname);
-      if(players){
-         return{
-            totalKills:players.i6,
-            totalDeaths:players.i8,
-            totalAssistsL:players.i7,
-            rating:formatRating(players.c2),
-            adr:players.c10 || "unstats",
-            tripleKill:players.i14 || "0",
-            quadroKill:players.i15 || "0",
-            pentaKill:players.i16 || "0",
-         }
-      }else{
-         console.log(`Player ${players} not found.`);
-      }
-   }else{
-      console.log(`Team ${selfteam} not found.`);
-   }
-}
-
 //Map Image URL
 function MapImageUrl(mapName){
    switch(mapName){

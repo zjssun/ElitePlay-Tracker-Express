@@ -1,7 +1,7 @@
 const axios = require('axios');
 const {get,set,del} = require('../utils/DateCache');
 const {GetTime} = require('../utils/TimeTool');
-const {figureResult,FindTeam,MapImageUrl} = require('../utils/MatchTool');
+const {figureResult,formatRating,MapImageUrl,} = require('../utils/MatchTool');
 
 const PlayerList = require('./PlayerList');
 
@@ -9,53 +9,35 @@ const getData = async (data)=>{
    try{
       if(!data) return [];
       const promises = data.map(async (v)=>{
-         //Check if it is a training match
+         const MatchRoom = `https://www.faceit.com/api/match/v2/match/${v.matchId}`;
+         let effectiveRanking = "0";
          if(v.bestOf === "2"){
-            const MatchRoom = `https://www.faceit.com/api/match/v2/match/${v.matchId}`;
-            const MatchDetail = `https://www.faceit.com/api/stats/v1/stats/matches/${v.matchId}`;
             const Room = await axios.get(MatchRoom);
-            // const Rooms = JSON.stringify(Room.data);
-            // const mapsMatch = JSON.parse(`{${Rooms.match(/("maps":\s*\[[\s\S]*?\])/)}}`).maps[0];
-            let RoomDetail = {
-               effectiveRanking:`${Room.data.payload.entityCustom.effectiveRanking}` || "0",
-               mapimage:MapImageUrl(v.i1),
-            };
-
-            const Detail = await axios.get(MatchDetail);
-            const Details = JSON.stringify(Detail.data);
-            const teamKeyIndex = Details.indexOf('"teams":');
-            const teamContent = JSON.parse(`{${Details.slice(teamKeyIndex,-1)}`);
-            let PlayerDetail= FindTeam(teamContent.teams,v.i5,v.nickname);
-            return{
-               time:GetTime(v.created_at,'YYYY/MM/DD,hh:mm:ss'),
-               nickname:v.nickname,
-               playerId:v._id.playerId,
-               team:v.i5,
-               matchMap:v.i1,
-               matchScore:v.i18,
-               matchResult:figureResult(v.i18,v.c5),
-               matchId:v.matchId,
-               roomUrl:`https://www.faceit.com/en/cs2/room/${v.matchId}/scoreboard`,
-               bestOf:v.bestOf,
-               timestamp:v.created_at,
-               ...RoomDetail,
-               ...PlayerDetail
-            }
+            effectiveRanking = Room.data.payload.entityCustom.effectiveRanking;
          }else{
-            return {
-               time:GetTime(v.created_at,'YYYY/MM/DD,hh:mm:ss'),
-               nickname:v.nickname,
-               playerId:v._id.playerId,
-               team:v.i5,
-               matchMap:v.i1,
-               matchScore:v.i18,
-               matchResult:figureResult(v.i18,v.c5),
-               mapimage:MapImageUrl(v.i1),
-               matchId:v.matchId,
-               roomUrl:`https://www.faceit.com/en/cs2/room/${v.matchId}/scoreboard`,
-               bestOf:v.bestOf,
-               timestamp:v.created_at,
-            };
+             effectiveRanking = "0";
+         }
+         return{
+            time:GetTime(v.created_at,'YYYY/MM/DD,hh:mm:ss'),
+            nickname:v.nickname,
+            playerId:v._id.playerId,
+            team:v.i5,
+            matchMap:v.i1,
+            matchScore:v.i18,
+            matchResult:figureResult(v.i18,v.c5),
+            matchId:v.matchId,
+            roomUrl:`https://www.faceit.com/en/cs2/room/${v.matchId}/scoreboard`,
+            bestOf:v.bestOf,
+            timestamp:v.created_at,
+            totalKills:v.i6,
+            totalDeaths:v.i8,
+            totalAssistsL:v.i7,
+            rating:formatRating(v.c2),
+            adr:v.c10 || "unstats",
+            tripleKill:v.i14 || "0",
+            quadroKill:v.i15 || "0",
+            pentaKill:v.i16 || "0",
+            effectiveRanking:effectiveRanking,
          }
       });
       return await Promise.all(promises);
@@ -72,7 +54,7 @@ const getPlayerDate = async () => {
          const response = await axios.get(`https://www.faceit.com/api/stats/v1/stats/time/users/${playerId}/games/cs2?page=0&size=10&game_mode=5v5`);
          const matchHistory = response.data;
          let playerData = await getData(matchHistory);
-         FinalData = [...FinalData, ...playerData.filter(v => v !== null)];
+         FinalData = [...FinalData, ...playerData];
      });
      await Promise.all(promises);
      return FinalData;
