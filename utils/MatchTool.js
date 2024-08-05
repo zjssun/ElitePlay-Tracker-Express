@@ -88,7 +88,6 @@ function formatRating(str) {
 
 module.exports = {
    figureResult,
-   FindTeam,
    MapImageUrl,
    GetTable,
    formatRating
