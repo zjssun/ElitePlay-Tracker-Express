@@ -1,7 +1,7 @@
 const axios = require('axios');
 const {get,set,del} = require('../utils/DateCache');
 const {GetTime} = require('../utils/TimeTool');
-const {figureResult,formatRating,MapImageUrl,} = require('../utils/MatchTool');
+const {figureResult,formatRating} = require('../utils/MatchTool');
 
 const PlayerList = require('./PlayerList');
 
