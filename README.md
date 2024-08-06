@@ -59,5 +59,5 @@ const pool = mysql.createPool({
 **6.启动服务 Start the service:**
 
 ```js
-npm start
+node index
 ```
