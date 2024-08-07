@@ -11,7 +11,9 @@ const PlayerList = [
    "niko 19606e0c-137b-4885-a904-744fa12d25f6",
    "jame f4c95e23-8930-49a5-b49d-94eff8b412f4",
    "jks 9a8ea9d5-61c7-4b38-b64f-35f4945048fa",
-   "twistzz a51c1404-1c5e-4688-b82c-ade59245e5b1"
+   "twistzz a51c1404-1c5e-4688-b82c-ade59245e5b1",
+   "electronic 928857e9-48e7-41b1-b4e8-217fd1a6e51b",
+   "kscerato c365e0fe-ae29-41d7-b331-ed8904e32d2b"
 ]
 
 module.exports = PlayerList;

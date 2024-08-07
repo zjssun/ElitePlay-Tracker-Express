@@ -5,7 +5,7 @@ function GetTime(date,format) {
 }
 
 function ComparisonTime(time){
-  return moment().isAfter(new Date(parseInt(time)+2678400000),'month');
+  return moment().isAfter(new Date(parseInt(time)+5270400000),'month');
 }
 
 module.exports = {GetTime,ComparisonTime};

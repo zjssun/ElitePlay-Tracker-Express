@@ -47,7 +47,11 @@ function GetTable(id){
       case "3b536dda-e3dd-40cd-baed-7e66ab050c8f":
          return "zywoo";
       case "a51c1404-1c5e-4688-b82c-ade59245e5b1":
-         return "twistzz"
+         return "twistzz";
+      case "928857e9-48e7-41b1-b4e8-217fd1a6e51b":
+         return "electronic";
+      case "c365e0fe-ae29-41d7-b331-ed8904e32d2b":
+         return "kscerato";
       default:
          return "unknown";
    }
